@@ -34,6 +34,7 @@ class Review(Base):
     comment = Column(String())
     
     game_id = Column(Integer(), ForeignKey('games.id'))
+    user_id = Column(Integer(), ForeignKey('users.id'))
 
     def __repr__(self):
         return f'Review(id={self.id}, ' + \
@@ -47,6 +48,8 @@ class User(Base):
     name = Column(String())
     created_at = Column(DateTime(), server_default=func.now())
     update_at = Column(DateTime(), onupdate=func.now())
+
+    reviews = relationship('Review', backref=backref('user'))
 
     def __repr__(self):
         return f'User(id={self.id}, ' + \
